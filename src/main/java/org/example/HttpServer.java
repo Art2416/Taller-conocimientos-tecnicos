@@ -36,8 +36,10 @@ public class HttpServer {
                 if(inputLine.contains("hello?name=class(")){
                     String[] res = inputLine.split("name=class");
                     comando = (res[1].split("HTTP")[0]).replace(" ", "");
-                    System.out.println("comando: " + comando);
-                    //optenerInfo(comando);
+
+                    String respuesta = comando.substring(1, comando.length()-1);
+                    System.out.println("respuesta: " + respuesta);
+                    optenerInfo(respuesta);
 
                 }
                 //Class c = Class.forName(comando);
@@ -112,8 +114,9 @@ public class HttpServer {
                 "</html>";
     }
     public static String optenerInfo(String comando) throws ClassNotFoundException {
-        System.out.println(comando);
         Class c = Class.forName(comando);
+
+        
         return String.valueOf(c);
     }
 }
