@@ -6,9 +6,9 @@ import java.io.*;
 public class HttpServer {
     private static String comando;
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
 
-        //Class c = Class.forName("java.lang.Math");
+
         ServerSocket serverSocket = null;
         try {
             serverSocket = new ServerSocket(36000);
@@ -33,13 +33,22 @@ public class HttpServer {
             String inputLine, outputLine;
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("Recibí: " + inputLine);
-                if(inputLine.contains("consulta?comando=")){
-                    String[] res = inputLine.split("consulta=");
+                if(inputLine.contains("hello?name=class(")){
+                    String[] res = inputLine.split("name=class");
                     comando = (res[1].split("HTTP")[0]).replace(" ", "");
+                    System.out.println("comando: " + comando);
+                    //optenerInfo(comando);
+
                 }
+                //Class c = Class.forName(comando);
+                //c.getDeclaredFields();
+                //System.out.println(c);
                 //{url del servicio}/consulta?comando=[comando]
-                if (!in.ready()) {break; }
+                if (!in.ready()) {
+                    break;
+                }
             }
+
             outputLine = "HTTP/1.1 200 OK\r\n" + "Content-Type: text/html\r\n" + "\r\n" + content();
 
             out.println(outputLine);
@@ -101,6 +110,11 @@ public class HttpServer {
                 "        </script>\n" +
                 "    </body>\n" +
                 "</html>";
+    }
+    public static String optenerInfo(String comando) throws ClassNotFoundException {
+        System.out.println(comando);
+        Class c = Class.forName(comando);
+        return String.valueOf(c);
     }
 }
 
